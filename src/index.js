@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
@@ -10,6 +10,8 @@ import {
     createHttpLink,
     InMemoryCache
 } from '@apollo/client';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // Create a httpLink that will connect ApolloClient instance with the GraphQL API.
 const httpLink = createHttpLink({
@@ -24,11 +26,10 @@ const client = new ApolloClient({
 
 // Render the root component of the react app. The app is wrapped with the higher-order component ApolloProvider that
 // gets passed the client as a prop
-ReactDOM.render(
+root.render(
         <ApolloProvider client={client}>
             <App/>
         </ApolloProvider>,
-    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
