@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
-
+import React, {useState} from 'react';
+import {useMutation, gql} from '@apollo/client';
+import {useNavigate} from 'react-router-dom';
 
 
 const CREATE_LINK_MUTATION = gql`
@@ -18,6 +18,9 @@ const CREATE_LINK_MUTATION = gql`
 `;
 
 const CreateLink = () => {
+    // Declare useNavigate as a const, so it can be used with the 'onCompleted' function inside [createLink]
+    const navigate = useNavigate();
+
     const [formState, setFormState] = useState({
         description: '',
         url: ''
@@ -29,7 +32,10 @@ const CreateLink = () => {
         variables: {
             description: formState.description,
             url: formState.url
-        }
+        },
+        // Once mutation completes, React Router will navigate back to the LinkList component that's accessible on the
+        // root route '/'
+        onCompleted: () => navigate('/')
     });
 
     return (
