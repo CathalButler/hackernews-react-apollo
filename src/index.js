@@ -10,6 +10,8 @@ import {
     createHttpLink,
     InMemoryCache
 } from '@apollo/client';
+import {setContext} from "@apollo/client/link/context";
+import {AUTH_TOKEN} from "./constants";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,11 +20,25 @@ const httpLink = createHttpLink({
     uri: 'http://localhost:4000'
 });
 
+// Configure Apollo with the auth token:
+const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem(AUTH_TOKEN);
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : ''
+        }
+    };
+});
+
 // Instantiate ApolloClient by passing in the httpLink and new instance of an InMemoryCache.
+// The auth middleware will be invoked every time ApolloClient sends a request to the server.
+// Apollo Links allow us to create middlewares that modify requests before they are sent to the server.
 const client = new ApolloClient({
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache()
 });
+
 
 // Render the root component of the React app. The app is wrapped with the higher-order component ApolloProvider that
 // gets passed the client as a prop
