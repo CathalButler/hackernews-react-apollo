@@ -1,3 +1,19 @@
+# Hackernews Clone
+
+This app is a clone of the hackernews following the howtographql.com tutorial. The following app features are 
+* Display a list of links
+* Handle user authentication
+* Allow authentication users to create a new links
+* Allow authentication user to upvote a link or create a new one
+
+## Technologies
+* Frontend:
+  * React
+  * Apollo Client - GraphicQL Client
+* Backend
+  * Apollo Server
+  * Prisma
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
